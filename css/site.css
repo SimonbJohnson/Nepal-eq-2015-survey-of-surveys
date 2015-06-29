@@ -1,0 +1,57 @@
+.dc-chart g.row text {
+    fill: black;
+    font-size:0.8em;
+}
+
+.dc-chart .pie-slice {
+    fill:black;
+}
+
+.x-axis-label{
+    font-size:0.8em;
+}
+
+#header{
+    padding-bottom:20px;
+    border-bottom-color: #dddddd;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    margin-bottom:20px;
+}
+
+.container{
+    padding-bottom:20px;
+    min-width:912px;
+}
+
+
+.viz-chart {
+    width:100%;
+}
+
+#mapChart {
+    height:350px;
+}
+
+.hdx-3w-info{
+    padding:5px;
+    background-color:white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    font-size:1.5em;
+    color:#056CB6;
+ }
+
+ .dc-table-label {
+    background-color:#cccccc;
+ }
+
+ .filter-count {
+    color:#056CB6;
+    font-size:2em;
+ }
+
+ #reset {
+    background-color:#056CB6;
+ }
