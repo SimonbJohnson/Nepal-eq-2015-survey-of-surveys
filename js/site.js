@@ -8,7 +8,8 @@ function initDashboard(data){
     var months = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',"No Date"];
     var hxlSet = hxlate(data);
     var sectorList=getSectors(hxlSet);
-    var cf = hxlToCF(hxlSet,sectorList,months);
+    var data = hxlToCF(hxlSet,sectorList,months);
+    var cf = crossfilter(data);
 
     var color = '#056CB6';
 
@@ -34,7 +35,7 @@ function initDashboard(data){
     var sectorChart = dc.rowChart('#sectorChart');
     var mapChart = dc.leafletChoroplethChart('#mapChart');
 
-    var monthDimension = cf.dimension(function(d){return d['date+month'];});
+    var monthDimension = cf.dimension(function(d){return d['date+week'];});
     var monthGroup = monthDimension.group();
 
     var sectorDimension = cf.dimension(function(d){ return d.sector;});
@@ -63,8 +64,7 @@ function initDashboard(data){
         .dimension(monthDimension) 
         .group(monthGroup)
         .colors([color])
-        .x(d3.scale.ordinal().domain(months))
-        .xUnits(dc.units.ordinal)
+        .x(d3.scale.linear().domain([0,d3.max(data,function(d){return d['date+week']})]))
         .elasticY(true)
         .yAxis().ticks(3);
 
@@ -104,13 +104,21 @@ function initDashboard(data){
             .center([27.85,85.1])
             .zoom(8)    
             .geojson(geom)
-            .colors(['#DDDDDD', '#056CB6'])
+            .colors(['#DDDDDD','#A7C1D3','#71A5CA','#3B88C0', '#056CB6'])
+            .colorDomain([0,4])
             .colorAccessor(function (d) {
-                if(d>0){
-                    return 1;
-                } else {
-                    return 0;
-                }
+                var c =0
+                if(d>50){
+                    c=4;
+                } else if (d>20) {
+                    c=3;
+                } else if (d>10) {
+                    c=2;
+                } else if (d>0) {
+                    c=1;
+                };
+                return c
+                
             })           
             .featureKeyAccessor(function(feature){
                 return feature.properties['HLCIT_CODE'];
@@ -119,10 +127,10 @@ function initDashboard(data){
             })
             .renderPopup(true)
             .featureOptions({
-                'fillColor': 'black',
+                'fillColor': 'gray',
                 'color': 'gray',
-                'opacity':0.1,
-                'fillOpacity': 0,
+                'opacity':0.8,
+                'fillOpacity': 0.1,
                 'weight': 1
             });
 
@@ -146,7 +154,7 @@ function initDashboard(data){
                        return d['meta+assessmenttitle']; 
                     },
                     function(d){
-                        if(d['sector'].length>3){
+                        if(d['sector'].length>4){
                             return 'Multisectoral'
                         }
                        return d['sector']; 
@@ -209,7 +217,8 @@ function hxlToCF(hxlSet,sectorList,months){
 
         sectorList.forEach(function(c){
             if(r.get(c)=='1'){
-                row.sector.push(c.substring(8));
+                var sector = c.substring(8)
+                row.sector.push(sector);
             }
         });
         cfData.push(row);
@@ -217,11 +226,16 @@ function hxlToCF(hxlSet,sectorList,months){
 
     cfData.forEach(function(d){
         var month = months[parseInt(d['date+published'].substring(3,5))-4];
+        var dateFormat = d3.time.format("%d/%m/%Y");
+        var week = dateFormat.parse(d['date+published']);
+        var earth = new Date(2015,3,25);
+        week = Math.ceil((week-earth)/ (1000 * 3600 * 24*7));
+        if(week<0){week=0};
         if(month==undefined){
             month='No Date';
         }
-        d['date+month'] = month;
+        d['date+week'] = week;
     });
     
-    return crossfilter(cfData);
+    return cfData;
 }
