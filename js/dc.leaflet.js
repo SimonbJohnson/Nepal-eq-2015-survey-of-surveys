@@ -744,7 +744,12 @@ dc.leafletChoroplethChart = function (parent, chartGroup) {
     var processFeatures = function (feature, layer) {
         var v = _dataMap[_chart.featureKeyAccessor()(feature)];
                 layer.on("mouseover",function(){
-                    _info.update(_chart.popup()(feature));
+                    if(v!==undefined){
+                        var info = _chart.popup()(feature) +": " +v.d.value;
+                    } else {
+                        var info = _chart.popup()(feature);
+                    }
+                    _info.update(info);
                 });
                 layer.on("mouseout",function(){
                     _info.update();

@@ -30,7 +30,7 @@
 }
 
 #mapChart {
-    height:350px;
+    height:370px;
 }
 
 .hdx-3w-info{
@@ -55,4 +55,17 @@
 
  #reset {
     background-color:#056CB6;
+ }
+
+ .grey  {
+    color:#7F7F7F;
+ }
+
+ a {
+    color:#F47932;
+ }
+
+ .dc-table-column {
+    font-size:0.75em;
+    color:#7F7F7F;
  }

@@ -33,31 +33,31 @@
             <div id="header" class="row">
                 <h2>Nepal Survey of Surveys</h2>
                 <div class="col-xs-8">  
-                    <p>A dashboard showing the surveys carried out in response to the Nepal earthquake.  Click the graphs and the map to filter the data in the table to find the relevant surveys.  View the latest data <a href="https://docs.google.com/spreadsheets/d/1b7GvKOrAZ40H8Z22E-2kDYXxtpLV89GJ32izJNRDhHE/edit?usp=sharing">here</a>.</p>
+                    <p class="grey">Nepal Survey of Surveys: Dashboard showing all published assessments covering humanitarian needs arising from the 25 April and 12 May earthquakes. The Assessment Unit welcomes all information that could complement this portal. For more information, comments or questions please email <a href="mailto:nepalassessments@humanitarianresponse.info">nepalassessments@humanitarianresponse.info</a> Click on the graphs and map to filter the data in the table to find the relevant surveys. View the latest data <a href="https://docs.google.com/spreadsheets/d/1b7GvKOrAZ40H8Z22E-2kDYXxtpLV89GJ32izJNRDhHE/edit?usp=sharing">here</a>.</p>
                 </div>
                 <div class="col-xs-1">
                     <a class="reset btn btn-primary btn-sm dashbutton" id="reset" href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
                 </div>                            
                 <div id="count-info" class="col-xs-3">
-                    <span class="filter-count "></span> selected out of <span class="total-count "></span> records.
+                    <p class="grey"><span class="filter-count "></span> selected out of <span class="total-count "></span> records.</p>
                 </div>                   
             </div>
             <div class="row">
                 <div class="col-xs-4">
                     <div id="sectorChart" class="viz-chart">
-                        <h4>Sector</h4>
+                        <h4>Sector covered (Click to filter)</h4>
                     </div>
                 </div>
                 <div class="col-xs-8">
                     <div class="row">
-                        <div id="monthChart" class="viz-chart">
-                            <h4>Month</h4>
-                        </div>                        
-                    </div>
-                    <div class="row">
                         <div class="viz-chart">
-                            <h4>Map</h4>
+                            <h4>Map (Click to filter)</h4>
                             <div id="mapChart" class="viz-chart"></div>
+                        </div>                        
+                    </div>                    
+                    <div class="row">
+                        <div id="monthChart" class="viz-chart">
+                            <h4>Weeks from April 25th 2015 (Click and drag to filter)</h4>
                         </div>                        
                     </div>                    
                 </div>             
