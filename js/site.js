@@ -78,6 +78,7 @@ function initDashboard(data){
             .colorAccessor(function (d) {
                 return 1;
             }) 
+        .labelOffsetY(25)
         .elasticX(true)
         .xAxis().ticks(4);
 
