@@ -36,6 +36,8 @@ function initDashboard(data){
     var sectorChart = dc.rowChart('#sectorChart');
     var mapChart = dc.leafletChoroplethChart('#mapChart');
 
+    var surveys = dc.numberDisplay('#selected');
+
     var monthDimension = cf.dimension(function(d){return d['date+week'];});
     var monthGroup = monthDimension.group();
 
@@ -45,7 +47,15 @@ function initDashboard(data){
     var mapDimension = cf.dimension(function(d){ return d['adm3+code']});
     var mapGroup = mapDimension.group();
 
+    var surveyDimension = cf.dimension(function(d){ return d['meta+assessmentid']});
+    var surveyGroup = surveyDimension.group();
+
     var all = cf.groupAll();
+
+    surveys
+        .valueAccessor(function(x){ return x;})
+        .group(unique_count(surveyGroup))
+        .formatNumber(function(x){ return Math.round(x);});
         
     sectorGroup.all = function() {
             var newObject = [];
@@ -184,7 +194,17 @@ function initDashboard(data){
 
     var map = mapChart.map();
     
-
+    function unique_count(group) {
+        return {
+            value: function() {
+                console.log(group.all().filter(function(kv) {
+                   return kv.value > 0}).length);
+                return group.all().filter(function(kv) {
+                   return kv.value > 0;
+                }).length;
+            }
+        };
+    }
 
 }
 
@@ -217,7 +237,7 @@ function hxlate(data){
 
 function hxlToCF(hxlSet,sectorList,months,weeks){
 
-    var columns = ['#org+lead','#adm3+name','#adm3+code','#adm4','#date+published','#meta+assessmenttitle','#meta+url'];
+    var columns = ['#org+lead','#adm3+name','#adm3+code','#adm4','#date+published','#meta+assessmenttitle','#meta+url','#meta+assessmentid'];
     var cfData = [];
 
     hxlSet.forEach(function(r){
